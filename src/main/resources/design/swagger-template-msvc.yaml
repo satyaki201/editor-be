@@ -1,0 +1,81 @@
+openapi: 3.0.4
+info:
+  title: Swagger Editor msvc
+  description: This is a Swagger spec for the code editor.
+  license:
+    name: Apache 2.0
+  version: 1.0.12
+
+tags:
+  - name: editor
+    description: Everything about Editor
+
+paths:
+  /template:
+    get:
+      tags:
+        - editor
+      summary: Get Template of zip
+      operationId: getTemplate
+      parameters:
+        - in: query
+          name: problemNo
+          required: true
+          schema:
+            type: string
+            example: items=1
+          description: Get items e.g., items=1
+      responses:
+        '206':
+          description: Partial content
+          headers:
+            Content-Range:
+              description: Returned range of items, e.g. items 0-9/100
+              schema:
+                type: string
+                example: items 0-9/100
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Template'
+        '400':
+          description: Invalid request
+        '404':
+          description: Not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Template:
+      type: object
+      properties:
+        dockerfile:
+          type: string
+          format: binary
+          description: Dockerfile to build the problem environment
+        problemZip:
+          type: string
+          format: binary
+          description: Zip file containing solution templates or test cases
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "VALIDATION_FAILED"
+        message:
+          type: string
+          example: "Invalid input provided"

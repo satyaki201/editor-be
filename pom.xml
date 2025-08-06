@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<openapi-generator.version>7.4.0</openapi-generator.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,6 +46,24 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.0.0</version> <!-- ✅ REQUIRED -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version> <!-- or latest stable -->
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -52,6 +71,35 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-api</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/design/swagger-template-msvc.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<output>${project.build.directory}/generated-sources/openapi</output>
+							<apiPackage>com.personal.editor.api</apiPackage>
+							<modelPackage>com.personal.editor.model</modelPackage>
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+								<useSpringBoot3>true</useSpringBoot3>
+								<useJakartaEe>true</useJakartaEe>
+								<useTags>true</useTags>
+								<sourceFolder>src/main/java</sourceFolder>
+								<dateLibrary>java8</dateLibrary>
+								<generateDefaultInterfaceImpl>false</generateDefaultInterfaceImpl>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

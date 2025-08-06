@@ -1,11 +1,18 @@
 package com.personal.editor.controller;
 
+import com.personal.editor.api.EditorApi;
+import com.personal.editor.model.Template;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/editor")
-public class EditorController {
-
-
+public class EditorController implements EditorApi {
+    @Override
+    public ResponseEntity<List<Template>> getTemplate(String problemNo) {
+        return EditorApi.super.getTemplate(problemNo);
+    }
 }
