@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/editor")
 public class EditorController implements EditorApi {
     @Override
-    public ResponseEntity<List<Template>> getTemplate(String problemNo) {
-        return EditorApi.super.getTemplate(problemNo);
+    public ResponseEntity<Template> getTemplate(String problemNo) {
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package com.personal.editor.service;
 
-public interface EditorService {
+import com.personal.editor.model.Template;
 
+public interface EditorService {
+    public Template getTemplateFromRepo(String problemNo);
 }

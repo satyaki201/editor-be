@@ -23,23 +23,15 @@ paths:
           required: true
           schema:
             type: string
-            example: items=1
-          description: Get items e.g., items=1
+            example: "1"
+          description: Get items e.g., problemNo=1
       responses:
         '206':
-          description: Partial content
-          headers:
-            Content-Range:
-              description: Returned range of items, e.g. items 0-9/100
-              schema:
-                type: string
-                example: items 0-9/100
+          description: Partial Content
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/Template'
         '400':
           description: Invalid request
         '404':
@@ -58,14 +50,10 @@ components:
     Template:
       type: object
       properties:
-        dockerfile:
+        codeSetupZip:
           type: string
           format: binary
-          description: Dockerfile to build the problem environment
-        problemZip:
-          type: string
-          format: binary
-          description: Zip file containing solution templates or test cases
+          description: Zip file containing Code Setup/Code Done Till Now
 
     Error:
       type: object
